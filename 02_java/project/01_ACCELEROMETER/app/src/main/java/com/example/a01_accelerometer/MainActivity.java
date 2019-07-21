@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
+        //KalmanFilter kf  = new KalmanFilter(3, 4);
         //read sensor
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         acc = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
