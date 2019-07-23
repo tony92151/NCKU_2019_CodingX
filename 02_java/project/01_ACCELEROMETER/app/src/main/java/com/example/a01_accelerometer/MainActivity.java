@@ -2,6 +2,7 @@ package com.example.a01_accelerometer;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private Button button1;
     private Button button2;
+    private Button button2map;
     private TextView textView1;
     private TextView textView2;
     private TextView textView3;
@@ -91,6 +93,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 valueZ.clear();
                 //count+=10;
                 //textView1.setText(String.valueOf(count));
+            }
+        });
+
+        button2map = (Button)findViewById(R.id.toMapbt);
+        button2map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, MainActivity2.class);
+                intent.putExtra("accDF",accDataF);
+                startActivity(intent);
             }
         });
 
@@ -308,4 +320,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         textView2.setText("Y: "+event.values[1]);
         textView3.setText("Z: "+event.values[2]);
     }
+
+    public double[] getacc() {
+        return accDataF;
+    }
+
 }
