@@ -1,5 +1,6 @@
 package com.example.a01_accelerometer;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -17,7 +18,17 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+
+
+
+import net.kibotu.kalmanrx.KalmanRx;
+
 import java.util.ArrayList;
+
+import org.opencv.core.Core;
+import org.opencv.video.KalmanFilter;
+import org.opencv.core.Mat;
+import static org.opencv.core.CvType.CV_32F;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener {
 
@@ -28,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private TextView textView3;
 
     public  double[] accData = {0,0,0};
+    public  double[] accDataF = {0,0,0};
     private SensorManager sensorManager;
     Sensor acc;
 
@@ -41,12 +53,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public LineDataSet set1 = new LineDataSet(valueX,"X");
     public LineDataSet set2 = new LineDataSet(valueY,"Y");
     public LineDataSet set3 = new LineDataSet(valueZ,"Z");
-    public LineData Ldata = new LineData(set1);
-    public LineData Ldata2 = new LineData(set2);
-    public LineData Ldata3 = new LineData(set3);
+
+    public ArrayList<Entry> valueXF = new ArrayList<>();
+    public ArrayList<Entry> valueYF =  new ArrayList<>();
+    public ArrayList<Entry> valueZF = new ArrayList<>();
+    public LineDataSet set1F = new LineDataSet(valueXF,"XF");
+    public LineDataSet set2F = new LineDataSet(valueYF,"YF");
+    public LineDataSet set3F = new LineDataSet(valueZF,"ZF");
+
+    public ghFilter x_filter =  new ghFilter();
+    public ghFilter y_filter =  new ghFilter();
+    public ghFilter z_filter =  new ghFilter();
+
+
+    public LineData Ldata1 = new LineData(set1,set1F);
+    public LineData Ldata2 = new LineData(set2,set2F);
+    public LineData Ldata3 = new LineData(set3,set3F);
     public double count;
-
-
 
 
 
@@ -55,7 +78,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mainlayout);
 
+
+
         //button seeting
+        //button1 = (Button) findViewById(R.id.t1);
         button1 = (Button) findViewById(R.id.tbn1);
         button1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +94,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        //KalmanFilter kf  = new KalmanFilter(3, 4);
+//        KalmanFilter kf  = new KalmanFilter(3, 4);
+//        Mat state = new Mat(2, 1, CV_32F);
+//        double[][] t = {{1}};
+//        //Mat a = new Mat({{1,0,0,0},{0,1,0,0}});
+//        kf.set_measurementMatrix(state);
+//        kf.set_transitionMatrix();
+//        kf.
+
         //read sensor
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
         acc = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -113,6 +146,23 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         set3.setDrawValues(false);
         set3.setLineWidth(0f);
 
+        ////////////////////////////////////////////////////////////
+        //set1.setDrawCircles(false);
+        set1F.setDrawCircles(false);
+        set1F.setColor(Color.BLUE);
+        set1F.setDrawValues(false);
+        set1F.setLineWidth(2f);
+
+        set2F.setDrawCircles(false);
+        set2F.setColor(Color.RED);
+        set2F.setDrawValues(false);
+        set2F.setLineWidth(2f);
+
+        set3F.setDrawCircles(false);
+        set3F.setColor(Color.GREEN);
+        set3F.setDrawValues(false);
+        set3F.setLineWidth(2f);
+
 //        Ldata = new LineData();
 //        Ldata.addDataSet(set1);
 //        Ldata2.addDataSet(set2);
@@ -120,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         mChart = new LineChart(this);
         mChart = (LineChart)findViewById(R.id.lineC);
-        mChart.setData(Ldata);
+        mChart.setData(Ldata1);
 
         mChart.setDragEnabled(false);
         mChart.setTouchEnabled(false);
@@ -163,6 +213,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         System.out.println("chart ++");
 
+//        KalmanRx.createFrom1D()
+
+//        KalmanRx.createFrom1D(floatObservable..map(e -> e.value))
+//        .subscribe(value->{}, Throwable::printStackTrace);
 
 
     }
@@ -178,11 +232,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         @Override
                         public void run() {
                             addentry();
+                            accDataF[0] = x_filter.update(accData[0]);
+                            accDataF[1] = y_filter.update(accData[1]);
+                            accDataF[2] = z_filter.update(accData[2]);
                             count++;
                         }
                     });
                     try {
-                        System.out.println("sleep");
+                        //System.out.println("sleep");
                         Thread.sleep(100);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
@@ -194,13 +251,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private void addentry(){
         //LineData data = mChart.getData();
-        if (Ldata!=null){
-            System.out.println("data ++");
-            System.out.println(set1);
-            System.out.println("coun: "+count);
+        if (Ldata1!=null){
+//            System.out.println("data ++");
+//            System.out.println(set1);
+//            System.out.println("coun: "+count);
             valueX.add(new Entry((float)(count*0.1),(float)accData[0]));
             valueY.add(new Entry((float)(count*0.1),(float)accData[1]));
             valueZ.add(new Entry((float)(count*0.1),(float)accData[2]));
+
+            valueXF.add(new Entry((float)(count*0.1),(float)accDataF[0]));
+            valueYF.add(new Entry((float)(count*0.1),(float)accDataF[1]));
+            valueZF.add(new Entry((float)(count*0.1),(float)accDataF[2]));
+
             if (valueX.size()>40){
                 valueX.remove(0);
                 valueY.remove(0);
@@ -210,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //Ldata.addEntry(new Entry(0.5f,19f),0);
             //System.out.println("data --");
             set1.notifyDataSetChanged();
-            Ldata.notifyDataChanged();
+            Ldata1.notifyDataChanged();
             mChart.notifyDataSetChanged();
 
             set2.notifyDataSetChanged();
@@ -223,7 +285,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         }
         //mChart.setVisibleXRange(-1,1);
-        mChart.moveViewToX((float)(Ldata.getDataSetCount()));
+        mChart.moveViewToX((float)(Ldata1.getDataSetCount()));
         mChart2.moveViewToX((float)(Ldata2.getDataSetCount()));
         mChart3.moveViewToX((float)(Ldata3.getDataSetCount()));
 
@@ -239,6 +301,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         accData[0] = event.values[0];
         accData[1] = event.values[1];
         accData[2] = event.values[2];
+
+
 
         textView1.setText("X: "+event.values[0]);
         textView2.setText("Y: "+event.values[1]);
