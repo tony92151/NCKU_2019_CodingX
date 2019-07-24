@@ -10,10 +10,12 @@
         android:roundIcon="@mipmap/ic_launcher_t"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning"
+        android:name=".globalVariable">
         <activity
             android:name=".MainActivity2"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            >
 
         </activity>
         <activity

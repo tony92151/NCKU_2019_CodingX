@@ -8,9 +8,9 @@
         
         <ImageView
             android:id="@+id/imgview"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:src="@drawable/avg"
+            android:layout_width="1800dp"
+            android:layout_height="1200dp"
+            android:src="@drawable/classroom"
             android:layout_gravity="center"/>
         <Button
             android:id="@+id/backbt"

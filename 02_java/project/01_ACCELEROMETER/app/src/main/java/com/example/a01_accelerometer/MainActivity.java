@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public LineData Ldata3 = new LineData(set3,set3F);
     public double count;
 
+    //public globalVariable gv = (globalVariable)getApplicationContext();
 
 
     @Override
@@ -116,8 +117,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         //read sensor
         sensorManager = (SensorManager)getSystemService(Context.SENSOR_SERVICE);
-        acc = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        acc = sensorManager.getDefaultSensor(Sensor.TYPE_ROTATION_VECTOR);
         sensorManager.registerListener(MainActivity.this,acc,SensorManager.SENSOR_DELAY_NORMAL);
+
+        int i = 0;
+        while (i<50){
+            accDataF[0] = x_filter.update(accData[0],"X");
+            accDataF[1] = y_filter.update(accData[1],"Y");
+            accDataF[2] = z_filter.update(accData[2],"Z");
+            System.out.println("flush 10 data");
+            i++;
+        }
 
         textView1 = (TextView) findViewById(R.id.t1);
         textView2 = (TextView) findViewById(R.id.t2);
@@ -223,13 +233,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //        mChart.getAxisRight().setEnabled(false);
 //        mChart.getAxisLeft().setAxisMinimum((float)(9.81*2.));
 
-        System.out.println("chart ++");
+        //System.out.println("chart ++");
 
 //        KalmanRx.createFrom1D()
 
 //        KalmanRx.createFrom1D(floatObservable..map(e -> e.value))
 //        .subscribe(value->{}, Throwable::printStackTrace);
 
+        x_filter.setTime_step(0.05);
+        y_filter.setTime_step(0.05);
+        z_filter.setTime_step(0.05);
 
     }
 
@@ -239,20 +252,21 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i=0;i<1000;i++){
+                for (int i=0;i<100000;i++){
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             addentry();
-                            accDataF[0] = x_filter.update(accData[0]);
-                            accDataF[1] = y_filter.update(accData[1]);
-                            accDataF[2] = z_filter.update(accData[2]);
+                            accDataF[0] = x_filter.update(accData[0],"X");
+                            accDataF[1] = y_filter.update(accData[1],"Y");
+                            accDataF[2] = z_filter.update(accData[2],"Z");
                             count++;
+                            //gv.setacc(accDataF);
                         }
                     });
                     try {
                         //System.out.println("sleep");
-                        Thread.sleep(100);
+                        Thread.sleep(50);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -267,13 +281,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //            System.out.println("data ++");
 //            System.out.println(set1);
 //            System.out.println("coun: "+count);
-            valueX.add(new Entry((float)(count*0.1),(float)accData[0]));
-            valueY.add(new Entry((float)(count*0.1),(float)accData[1]));
-            valueZ.add(new Entry((float)(count*0.1),(float)accData[2]));
+            valueX.add(new Entry((float)(count*0.05),(float)accData[0]));
+            valueY.add(new Entry((float)(count*0.05),(float)accData[1]));
+            valueZ.add(new Entry((float)(count*0.05),(float)accData[2]));
 
-            valueXF.add(new Entry((float)(count*0.1),(float)accDataF[0]));
-            valueYF.add(new Entry((float)(count*0.1),(float)accDataF[1]));
-            valueZF.add(new Entry((float)(count*0.1),(float)accDataF[2]));
+            valueXF.add(new Entry((float)(count*0.05),(float)accDataF[0]));
+            valueYF.add(new Entry((float)(count*0.05),(float)accDataF[1]));
+            valueZF.add(new Entry((float)(count*0.05),(float)accDataF[2]));
 
             if (valueX.size()>40){
                 valueX.remove(0);
@@ -321,8 +335,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         textView3.setText("Z: "+event.values[2]);
     }
 
-    public double[] getacc() {
-        return accDataF;
-    }
+
 
 }
