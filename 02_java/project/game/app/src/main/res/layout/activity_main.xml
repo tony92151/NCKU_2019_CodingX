@@ -15,6 +15,13 @@
             <!---->
             <!--android:textSize="40dp"-->
             <!--android:layout_gravity="bottom"/>-->
+
+        <Button
+            android:id="@+id/playbt"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="123"
+            android:textSize="20dp"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
