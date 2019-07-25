@@ -1,4 +1,0 @@
-#Thu Jul 25 14:34:46 CST 2019
-base.0=/Users/tonyguo/Documents/github_project/NCKU_2019_CodingX/02_java/project/game/app/build/intermediates/transforms/dexMerger/debug/6
-path.0=classes.dex
-renamed.0=classes.dex
