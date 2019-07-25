@@ -9,25 +9,25 @@
 
         <ImageView
             android:id="@+id/imgview"
-            android:layout_width="1800dp"
-            android:layout_height="1200dp"
+            android:layout_width="1000dp"
+            android:layout_height="800dp"
             android:layout_gravity="center"
-            android:src="@drawable/classroom" />
+            android:src="@drawable/pic3" />
 
-        <ImageView
-            android:id="@+id/eye"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/targeteye"
-            android:translationX="-55dp"
-            android:translationY="-140dp"
-            android:layout_gravity="center"/>
+        <!--<ImageView-->
+            <!--android:id="@+id/eye"-->
+            <!--android:layout_width="50dp"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:src="@drawable/targeteye"-->
+            <!--android:translationX="-55dp"-->
+            <!--android:translationY="-140dp"-->
+            <!--android:layout_gravity="center"/>-->
         <Button
-            android:id="@+id/backbt"
-            android:layout_width="200dp"
+            android:id="@+id/backbutton"
+            android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_gravity="center_horizontal"
-            android:text="Back"
+            android:text="b"
+            android:textStyle="bold"
             android:textSize="30dp"/>
 
 

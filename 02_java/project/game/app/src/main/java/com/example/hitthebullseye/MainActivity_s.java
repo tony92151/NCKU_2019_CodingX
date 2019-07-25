@@ -67,12 +67,12 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
         }
 
 
-        buttonBack = (Button)findViewById(R.id.backbt);
+        buttonBack = (Button)findViewById(R.id.backbutton);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent intent = new Intent(MainActivity2.this, MainActivity.class);
-                //startActivity(intent);
+                Intent intent = new Intent(MainActivity_s.this, MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -90,7 +90,7 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
 
         imgv = (ImageView)findViewById(R.id.imgview);
 
-        eye = (ImageView)findViewById(R.id.eye);
+        //eye = (ImageView)findViewById(R.id.eye);
         imgv.setX((int)(accDataF[0]*100));
         imgv.setY((int)(accDataF[1]*100));
         System.out.println("move");
@@ -129,11 +129,11 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
                             accDataF[1] = y_filter.update(accData[1],"Y");
                             accDataF[2] = z_filter.update(accData[2],"Z");
                             count++;
-                            imgv.setX((int)y_filter.getdir()*250-2000);
-                            eye.setX((int)y_filter.getdir()*250-2000);
+                            imgv.setX((int)y_filter.getdir()*250-1000);
+                            //eye.setX((int)y_filter.getdir()*250-1000);
                             System.out.println("X dir = " +(x_filter.getdir()*10+200));
-                            imgv.setY((int)x_filter.getdir()*250-2500);
-                            eye.setY((int)x_filter.getdir()*250-2500);
+                            imgv.setY((int)x_filter.getdir()*250-1800);
+                            //eye.setY((int)x_filter.getdir()*250-2000);
                             System.out.println("y dir = " +(y_filter.getdir()*10+400));
                             //System.out.println("move");
 
