@@ -22,10 +22,12 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
 
     //private int accDataF = ((MainActivity) this.MainActivity2()).getacc();
     public Button buttonBack;
+    public Button buttonshoot;
     private TextView score;
+    private TextView timeCount;
+    public boolean shooted = false;
 
     public ImageView imgv;
-    public ImageView eye;
 
     public  double[] accDataF = {0,0,0};
     public  double[] accData = {0,0,0};
@@ -33,6 +35,7 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
     private SensorManager sensorManager;
     Sensor acc;
     public double count;
+    public score sco = new score();
 
     public ghFilter x_filter =  new ghFilter();
     public ghFilter y_filter =  new ghFilter();
@@ -41,17 +44,13 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
 
     public boolean toFinal  =true;
 
-    //public globalVariable gv = (globalVariable)getApplicationContext();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-        //flush 10 data
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_s);
 
+        //flush 10 data
         int i = 0;
         while (i<50){
             accDataF[0] = x_filter.update(accData[0],"X");
@@ -61,10 +60,10 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
             i++;
         }
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            accDataF = extras.getDoubleArray("accDF");
-        }
+//        Bundle extras = getIntent().getExtras();
+//        if (extras != null) {
+//            accDataF = extras.getDoubleArray("accDF");
+//        }
 
 
         buttonBack = (Button)findViewById(R.id.backbutton);
@@ -76,16 +75,29 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
             }
         });
 
+        buttonshoot = (Button)findViewById(R.id.btnshoot);
+        buttonshoot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shooted = true;
+            }
+        });
 
-        score sco=new score();
+
+
 
         int score_int=sco.score;
-        score_str=Integer.toString(score_int);
-        score=(TextView) findViewById(R.id.score);
-        score.setText("Score: "+score_str);
-//        score.setTextColor(0xFF008080);
+        score_str=Integer.toString(sco.score);
+        score = (TextView) findViewById(R.id.score);
+        score.setText("Score : 111"+score_str);
+        //score.setTextColor(0xFF008080);
         score.setTextColor(Color.RED);
-        score.setTextSize(30);
+        //score.setTextSize(30);
+
+        timeCount = (TextView)findViewById(R.id.counttTime);
+        timeCount.setText("Time : "+count*0.5);
+        score.setTextColor(Color.RED);
+        //score.setTextSize(30);
 
 
         imgv = (ImageView)findViewById(R.id.imgview);
@@ -131,11 +143,18 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
                             count++;
                             imgv.setX((int)y_filter.getdir()*250-1000);
                             //eye.setX((int)y_filter.getdir()*250-1000);
-                            System.out.println("X dir = " +(x_filter.getdir()*10+200));
+                            //System.out.println("X dir = " +(x_filter.getdir()*10+200));
                             imgv.setY((int)x_filter.getdir()*250-1800);
                             //eye.setY((int)x_filter.getdir()*250-2000);
-                            System.out.println("y dir = " +(y_filter.getdir()*10+400));
+                            //System.out.println("y dir = " +(y_filter.getdir()*10+400));
                             //System.out.println("move");
+                            //String sc = "Score:"+score_str;
+                            //String scT = "Time:"+Double.toString(count*0.5);
+                            score.setText(Integer.toString(sco.score));
+                            timeCount.setText(Double.toString((20.-count*0.05)));
+                            //score.notifyAll();
+                            //timeCount.notifyAll();
+                            //System.out.println(Double.toString(10-count*0.5));
 
 
                         }
@@ -161,15 +180,18 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
         accData[1] = event.values[1];
         accData[2] = event.values[2];
         System.out.println("time: "+count*0.05);
-        if(count*0.05>=10 && toFinal){
+        if(count*0.05>=20 && toFinal){
             toFinal = false;
             Intent intent = new Intent(MainActivity_s.this, final_score.class);
             Bundle bundle = new Bundle();
 
-            bundle.putString("score",score_str);
+            bundle.putString("score",Integer.toString(sco.score));
             intent.putExtras(bundle);
             startActivity(intent);
 
         }
+        double[] playlocal = {(x_filter.getdir()*10+200),(y_filter.getdir()*10+400)};
+        sco.play(playlocal,shooted);
+        shooted = false;
     }
 }

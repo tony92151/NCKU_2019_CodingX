@@ -6,4 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".final_score">
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:layout_width="1400dp"
+            android:layout_height="800dp"
+            android:src="@drawable/pic3"
+            android:translationX="-300dp"
+            android:translationY="-10dp"/>
+
+        <TextView
+
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="SCORE"
+            android:textSize="100dp"
+            android:translationY="-170dp"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/scoreText"
+            android:layout_width="400dp"
+            android:layout_height="385dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/colorAccent"
+            android:textSize="200dp"
+            android:textStyle="bold" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_horizontal">
+            <Button
+                android:id="@+id/playagain"
+                android:layout_width="270dp"
+                android:layout_height="80dp"
+
+                android:layout_gravity="center"
+                android:text="PLAY AGAIN"
+                android:gravity="center"
+                android:textSize="40dp" />
+
+        </LinearLayout>
+
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>
