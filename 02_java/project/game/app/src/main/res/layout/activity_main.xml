@@ -15,6 +15,13 @@
             <!---->
             <!--android:textSize="40dp"-->
             <!--android:layout_gravity="bottom"/>-->
+        <Button
+            android:id="@+id/play"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="play"
+            android:textSize="30dp"
+            />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"
@@ -27,10 +34,14 @@
                 android:src="@drawable/playbtn"
                 />
 
+
+
         </LinearLayout>
 
 
 
+
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

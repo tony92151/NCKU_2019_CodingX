@@ -4,6 +4,7 @@ package com.example.hitthebullseye;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,11 +14,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity_s extends AppCompatActivity implements SensorEventListener {
 
     //private int accDataF = ((MainActivity) this.MainActivity2()).getacc();
     public Button buttonBack;
+    private TextView score;
 
     public ImageView imgv;
     public ImageView eye;
@@ -32,6 +37,9 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
     public ghFilter x_filter =  new ghFilter();
     public ghFilter y_filter =  new ghFilter();
     public ghFilter z_filter =  new ghFilter();
+    public String score_str;
+
+    public boolean toFinal  =true;
 
     //public globalVariable gv = (globalVariable)getApplicationContext();
 
@@ -67,6 +75,18 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
                 //startActivity(intent);
             }
         });
+
+
+        score sco=new score();
+
+        int score_int=sco.score;
+        score_str=Integer.toString(score_int);
+        score=(TextView) findViewById(R.id.score);
+        score.setText("Score: "+score_str);
+//        score.setTextColor(0xFF008080);
+        score.setTextColor(Color.RED);
+        score.setTextSize(30);
+
 
         imgv = (ImageView)findViewById(R.id.imgview);
 
@@ -116,6 +136,8 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
                             eye.setY((int)x_filter.getdir()*250-2500);
                             System.out.println("y dir = " +(y_filter.getdir()*10+400));
                             //System.out.println("move");
+
+
                         }
                     });
                     try {
@@ -138,5 +160,16 @@ public class MainActivity_s extends AppCompatActivity implements SensorEventList
         accData[0] = event.values[0];
         accData[1] = event.values[1];
         accData[2] = event.values[2];
+        System.out.println("time: "+count*0.05);
+        if(count*0.05>=10 && toFinal){
+            toFinal = false;
+            Intent intent = new Intent(MainActivity_s.this, final_score.class);
+            Bundle bundle = new Bundle();
+
+            bundle.putString("score",score_str);
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        }
     }
 }

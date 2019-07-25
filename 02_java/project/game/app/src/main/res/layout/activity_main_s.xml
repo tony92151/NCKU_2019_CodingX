@@ -57,8 +57,12 @@
             android:textSize="30dp"/>
 
         <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:id="@+id/score"
+            android:layout_width="150dp"
+            android:layout_height="91dp"
+            android:layout_gravity="right"
+            android:text="w"
+            android:textSize="30dp" />
 
 
 
