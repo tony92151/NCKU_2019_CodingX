@@ -18,6 +18,7 @@ public class MainActivity2 extends AppCompatActivity implements SensorEventListe
     public Button buttonBack;
 
     public ImageView imgv;
+    public ImageView eye;
 
     public  double[] accDataF = {0,0,0};
     public  double[] accData = {0,0,0};
@@ -66,6 +67,8 @@ public class MainActivity2 extends AppCompatActivity implements SensorEventListe
         });
 
         imgv = (ImageView)findViewById(R.id.imgview);
+
+        eye = (ImageView)findViewById(R.id.eye);
         imgv.setX((int)(accDataF[0]*100));
         imgv.setY((int)(accDataF[1]*100));
         System.out.println("move");
@@ -104,9 +107,11 @@ public class MainActivity2 extends AppCompatActivity implements SensorEventListe
                             accDataF[1] = y_filter.update(accData[1],"Y");
                             accDataF[2] = z_filter.update(accData[2],"Z");
                             count++;
-                            imgv.setX((int)y_filter.getdir()*200-2000);
+                            imgv.setX((int)y_filter.getdir()*250-2000);
+                            eye.setX((int)y_filter.getdir()*250-2000);
                             System.out.println("X dir = " +(x_filter.getdir()*10+200));
-                            imgv.setY((int)x_filter.getdir()*200-2500);
+                            imgv.setY((int)x_filter.getdir()*250-2500);
+                            eye.setY((int)x_filter.getdir()*250-2500);
                             System.out.println("y dir = " +(y_filter.getdir()*10+400));
                             //System.out.println("move");
                         }

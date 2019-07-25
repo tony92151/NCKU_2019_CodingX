@@ -1,16 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        
+
         <ImageView
             android:id="@+id/imgview"
             android:layout_width="1800dp"
             android:layout_height="1200dp"
-            android:src="@drawable/classroom"
+            android:layout_gravity="center"
+            android:src="@drawable/classroom" />
+
+        <ImageView
+            android:id="@+id/eye"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/targeteye"
+            android:translationX="-55dp"
+            android:translationY="-140dp"
             android:layout_gravity="center"/>
         <Button
             android:id="@+id/backbt"
@@ -19,6 +29,33 @@
             android:layout_gravity="center_horizontal"
             android:text="Back"
             android:textSize="30dp"/>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/target"
+            android:layout_gravity="center"/>
+
+        <!--<ImageView-->
+            <!--android:layout_width="400dp"-->
+            <!--android:layout_height="400dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:rotation="40"-->
+            <!--android:src="@drawable/cupid_ee"-->
+            <!--android:translationX="150dp"-->
+            <!--android:translationY="150dp"/>-->
+
+
+        <Button
+            android:id="@+id/shoot"
+            android:layout_width="200dp"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+
+            android:text="shoot"
+            android:textSize="30dp"/>
+
+
 
     </FrameLayout>
 </LinearLayout>
