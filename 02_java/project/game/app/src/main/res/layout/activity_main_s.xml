@@ -30,6 +30,7 @@
             android:text="Back"
             android:textSize="30dp"/>
 
+
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -54,6 +55,10 @@
 
             android:text="shoot"
             android:textSize="30dp"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
 
 
 
