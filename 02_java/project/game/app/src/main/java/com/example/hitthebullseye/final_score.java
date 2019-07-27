@@ -16,7 +16,7 @@ public class final_score extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_final_score);
+                setContentView(R.layout.activity_final_score);
 
 
         Bundle bundle = getIntent().getExtras();
