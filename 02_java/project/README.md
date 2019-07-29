@@ -12,10 +12,10 @@
 
 ## App 1 : testing accelerometer > filter > plot
 
-<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/plotApp.png" width="360"/>
+<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/plotApp.png" width="240"/>
 
 ## App 2 : game
 
-<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/screen3.png" align="right" width="360"/>
-<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/screen2.png" align="right" width="360"/>
-<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/screen1.png" align="right" width="360"/>
+<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/screen3.png" align="right" width="240"/>
+<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/screen2.png" align="right" width="240"/>
+<img src="https://raw.githubusercontent.com/tony92151/NCKU_2019_CodingX/master/02_java/project/image/screen1.png" align="right" width="240"/>
